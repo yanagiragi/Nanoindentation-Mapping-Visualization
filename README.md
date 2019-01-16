@@ -17,4 +17,6 @@ node_modules Prerequisite:  ``` npm install```
 
 Execute: ``` node main.js .\data.txt 512```
 
+Execute With logged: ``` node main.js .\data.txt 512 | tee log.txt```
+
 Convert ppm to png: ```Follow the output cheatsheet```
