@@ -13,10 +13,16 @@ const lookupTable = new THREE.Lut(mode, colors)
 
 /******** setup configs ********/ 
 const dataPath = process.argv[2] || "null"
-const resolution = process.argv[3] || "null"
+const resolution = parseInt(process.argv[3]) || "null"
 
 if(dataPath === `null` || resolution === `null`){
     console.log(`node main.js data.txt $resolution`)
+    console.log('Abort.')
+    process.exit()
+}
+else if(resolution < matrixCount){
+    console.log(`Resolution should bigger than ${matrixCount}`)
+    console.log('Abort.')
     process.exit()
 }
 
