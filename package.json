@@ -1,0 +1,26 @@
+{
+  "name": "dhp",
+  "version": "1.0.0",
+  "description": "* 看起來很厲害 但就是個視覺化工具",
+  "main": "main.js",
+  "dependencies": {
+    "three-lut": "^79.0.1",
+    "three": "^0.100.0",
+    "sanitize-filename": "^1.6.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yanagiragi/Nanoindentation-Mapping-Visualization.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yanagiragi/Nanoindentation-Mapping-Visualization/issues"
+  },
+  "homepage": "https://github.com/yanagiragi/Nanoindentation-Mapping-Visualization#readme"
+}
