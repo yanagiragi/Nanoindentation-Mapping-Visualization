@@ -36,13 +36,10 @@ if(data[data.length - 1] === ``)
 console.log(`Data Amount = ${data.length}`)
 
 let columnData = rawData.toString().split('\n').splice(2, 1)[0].replace('\r','').split('\t')
-
 const columnAmount = columnData.length
-
 console.log(`ColumnAmount = ${columnAmount}`)
 
 let valid = (data.length) % 64
-
 if(valid != 0)
 {
     console.log(`\tdata amount is not multiple of ${matrixCount}`)
@@ -52,6 +49,8 @@ if(valid != 0)
         console.log(shame)
     process.exit()
 }    
+
+let differences = collectDifference(getSplitedData(data))
 
 /******** slice data into batched of data (each matrixCount as a batch) and process ********/ 
 for(let i = 0; i < data.length / matrixCount; ++i)
@@ -82,10 +81,9 @@ if(shouldPrintCheetSheet)
     console.log('=======================================================')
 }
 
-function process64(prefixIndex, data)
-{
+function getSplitedData(data)
+{    
     let splittedData = []
-
     for(let i = 0; i < data.length; ++i)
     {
         let splitted =  data[i].replace('\r','').split('\t')
@@ -101,34 +99,66 @@ function process64(prefixIndex, data)
 
         splittedData.push(splitted)
     }
+    return splittedData
+}
+
+function collectDifference(data)
+{
+    let differences = [{min: Infinity, max: -Infinity}]
+
+    let columnAmount = columnData.length
+
+    for(let j = 1; j < columnAmount; ++j)
+        differences.push({min: Infinity, max: -Infinity})
+
+    for(let j = 1; j < columnAmount; ++j)
+    {    
+        let minIndex = 0, maxIndex = 0
+        for(let i = 0; i < data.length; ++i)
+        {
+            if(parseFloat(data[i][j]) < parseFloat(data[minIndex][j])){
+                minIndex = i
+            }
+
+            if(parseFloat(data[i][j]) > parseFloat(data[maxIndex][j])){
+                maxIndex = i
+            }
+            
+        }
+
+        let min = parseFloat(data[minIndex][j])
+        let max = parseFloat(data[maxIndex][j])
+        
+        if(min < differences[j].min)
+            differences[j].min = min
+        if(max > differences[j].max)
+            differences[j].max = max
+    }
+
+    console.log(`Statistics:`)
+
+    for(let j = 1; j < columnAmount; ++j)
+        console.log(`\t${columnData[j]} = `, differences[j].min, differences[j].max, differences[j].max - differences[j].min)
+    
+    console.log(``)
+
+    return differences
+}
+
+function process64(prefixIndex, data)
+{
+    let splittedData = getSplitedData(data)
 
     // post process data
 
     // skip File column
     for(let j = 1; j < splittedData[0].length; ++j)
     {    
-        let minIndex = 0, maxIndex = 0
-        for(let i = 0; i < splittedData.length; ++i)
-        {
-            if(parseFloat(splittedData[i][j]) < parseFloat(splittedData[minIndex][j])){
-                minIndex = i
-            }
-
-            if(parseFloat(splittedData[i][j]) > parseFloat(splittedData[maxIndex][j])){
-                maxIndex = i
-            }
-            
-        }
-
-        let min = parseFloat(splittedData[minIndex][j])
-        let max = parseFloat(splittedData[maxIndex][j])
-        let difference = max - min
-
-        console.log(`\t${columnData[j]} = `, min, max, difference)
+        let diff = differences[j].max - differences[j].min
 
         for(let i = 0; i < splittedData.length; ++i)
         {
-            splittedData[i][j] = (parseFloat(splittedData[i][j]) - min) / difference
+            splittedData[i][j] = (parseFloat(splittedData[i][j]) - differences[j].min) / diff
             if(splittedData[i][j] > 1 || splittedData[i][j] < 0){
                 console.log(`\tcaught Exception = ${splittedData[i][j]}`)
             }
