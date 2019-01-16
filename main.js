@@ -33,7 +33,7 @@ let columnData = rawData.toString().split('\n').splice(2, 1)[0].replace('\r','')
 
 const columnAmount = columnData.length
 
-console.log(`\tcolumnAmount = ${columnAmount}`)
+console.log(`ColumnAmount = ${columnAmount}`)
 
 let valid = (data.length) % 64
 
