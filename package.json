@@ -1,7 +1,7 @@
 {
   "name": "dhp",
   "version": "1.0.0",
-  "description": "* 看起來很厲害 但就是個視覺化工具",
+  "description": "",
   "main": "main.js",
   "dependencies": {
     "three-lut": "^79.0.1",
