@@ -4,11 +4,10 @@
   "description": "",
   "main": "main.js",
   "dependencies": {
-    "three-lut": "^79.0.1",
-    "three": "^0.100.0",
-    "sanitize-filename": "^1.6.1"
+    "sanitize-filename": "^1.6.1",
+    "three": "^0.148.0",
+    "three-lut": "^79.0.1"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
